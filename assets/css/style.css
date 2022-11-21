@@ -1,0 +1,15 @@
+header {
+    background: rgb(152,142,237);
+    background: linear-gradient(90deg, rgba(152,142,237,1) 0%, rgba(75,22,166,1) 47%, rgba(78,0,133,1) 100%);
+    color: white;
+}
+
+header h1 {
+    margin-left: 300px;
+    padding: 10px 0px 10px 0px;
+}
+
+
+.srchbtn {
+    background-color: #8080ff;
+}
