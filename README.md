@@ -14,10 +14,8 @@ N/A
 
 ## Usage
 
-To use, type the name of the desired city into the input field and click the search button. You'll then be presented with both the city's current conditions and a 5 day forecast. This is demonstrated in the following screenshot
-
-
-    ![usage screenshot](assets/images/weather-dashboard-screenshot.png)
+To use, type the name of the desired city into the input field and click the search button. You'll then be presented with both the city's current conditions and a 5 day forecast. This is demonstrated in the following screenshot:
+![usage screenshot](assets/images/weather-dashboard-screenshot.png)
 
 
 ## Credits
