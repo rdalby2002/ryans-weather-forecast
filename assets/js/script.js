@@ -1,12 +1,15 @@
+//Set HTML elements as variables
 var cityInputEL = $('#cityinput');
 var searchButtonEL = $('#srchbtn');
-var searchHistoryEL = $('#searchhistory');
 var currentWeatherEL = $('#currentweather');
 var forecastEL = $('#forecast');
+//Set my unique OpenWeatherMap API key as a variable
 var APIkey = '4e03668922cf56c28728986d0737b89e';
-
+//Function for today's weather
 var getCurrentWeather = (event) => {
+    //collects user input
     var cityInput = cityInputEL.val();
+    //Uses Geocoding API to get latitude and longitude from city name, to be used in forecast URL
     var geoQueryURL = 'http://api.openweathermap.org/geo/1.0/direct?q=' + cityInput + '&limit=1&appid=' + APIkey;
     fetch(geoQueryURL)
     .then((response) => {
@@ -26,9 +29,10 @@ var getCurrentWeather = (event) => {
             var currentTimeZoneOffset = data.city.timezone;
             var currentTimeZoneOffsetHours = currentTimeZoneOffset / 60 /60;
             var currentTime = moment.unix(currentTimeUTC).utc().utcOffset(currentTimeZoneOffsetHours);
-            
+            //Runs 5 day forecast function
             getForecast(event);
             currentWeatherEL.addClass('border border-1 border-dark')
+            //Create HTML elements for required datapoints
             var currentWeather = `
             <h3 class="p-1">${data.city.name} ${currentTime.format("MM/DD/YYYY")} <img src="${currentWeatherIcon}"></h3>
             <ul class="list-unstyled p-1">
@@ -36,13 +40,16 @@ var getCurrentWeather = (event) => {
                 <li class="py-2">Wind: ${data.list[0].wind.speed} MPH</li>
                 <li class="py-2">Humidity: ${data.list[0].main.humidity}%</li>
             </ul>`;
+            //Appends newly created elements to the page
             currentWeatherEL.html(currentWeather);
 
         })
     })
 }
 
+//Start 5 day forecast function
 var getForecast = (event) => {
+    //Utilizes same method as above to acquire lat and lon
     var cityInput = cityInputEL.val();
     var geoQueryURL = 'http://api.openweathermap.org/geo/1.0/direct?q=' + cityInput + '&limit=1&appid=' + APIkey;
     fetch(geoQueryURL)
@@ -62,6 +69,7 @@ var getForecast = (event) => {
             <h2>5-Day-Forecast:</h2>
             <div id="fiveDayForecastUL" class="d-inline-flex flex-wrap gap-3">
             `
+            //For loop, creating a new card for each day in the forecast
             for (var i = 1; i < data.list.length; i++) {
                 var listData = data.list[i];
                 var forecastTimeUTC = listData.dt;
@@ -82,6 +90,7 @@ var getForecast = (event) => {
                     </div>`;
                 }
             }
+            //Completes the forecast dive and appends to the page
             forecastHTML += `</div>`;
             forecastEL.html(forecastHTML);
 
@@ -89,6 +98,7 @@ var getForecast = (event) => {
     })
 }
 
+//Event listener for search button
 searchButtonEL.on("click", (event) => {
     event.preventDefault();
     getCurrentWeather(event);
